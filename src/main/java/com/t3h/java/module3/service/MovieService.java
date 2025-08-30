@@ -22,4 +22,8 @@ public class MovieService {
         return movieRepository.findByTitleContainingIgnoreCase(keyString);
     }
 
+    public Movie createNewMovie(Movie params){
+        return movieRepository.save(params);
+    }
+
 }
