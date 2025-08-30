@@ -1,6 +1,7 @@
 package com.t3h.java.module3.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,25 @@ public class MovieService {
 
     public Movie createNewMovie(Movie params){
         return movieRepository.save(params);
+    }
+
+    public Movie updateMovie(String id, Movie params){
+        Movie existing = movieRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Movie not found with id: " + id));
+
+        // Update fields
+        if (Objects.nonNull(params.getTitle()))
+            existing.setTitle(params.getTitle());
+        if (Objects.nonNull(params.getYear()))
+            existing.setYear(params.getYear());
+        if (Objects.nonNull(params.getGenre()))
+            existing.setGenre(params.getGenre());
+        if (Objects.nonNull(params.getDirector()))
+            existing.setDirector(params.getDirector());
+        if (Objects.nonNull(params.getRating()))
+            existing.setRating(params.getRating());
+
+        return movieRepository.save(existing);
     }
 
 }
