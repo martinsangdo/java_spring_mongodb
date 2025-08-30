@@ -17,4 +17,9 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public List<Movie> searchByKeyword(String keyString){
+        System.out.println(keyString);
+        return movieRepository.findByTitleContainingIgnoreCase(keyString);
+    }
+
 }
