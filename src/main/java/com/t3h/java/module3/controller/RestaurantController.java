@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,5 +74,15 @@ public class RestaurantController {
         Restaurant restaurant = restaurantService.findById(id);
         model.addAttribute("restaurant", restaurant);
         return "unit4_restaurant_detail"; // Thymeleaf template
+    }
+
+    // Handle update
+    @PostMapping("/restaurants/detail/{id}")
+    public String updateRestaurant(@PathVariable String id,
+                                   @ModelAttribute Restaurant updatedRestaurant, Model model) {
+        Restaurant oldRestaurant = restaurantService.findById(id);
+        restaurantService.updateDetail(oldRestaurant, updatedRestaurant);
+        model.addAttribute("message", "Update data successfully");
+        return "unit4_restaurant_detail"; // back to list
     }
 }

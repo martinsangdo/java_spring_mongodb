@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -65,5 +66,18 @@ public class RestaurantService {
 
     public Restaurant findById(String id){
         return restaurantRepository.findFirstByRestaurantId(id);
+    }
+
+    public Restaurant updateDetail(Restaurant oldObject, Restaurant newObject){
+        if (Objects.nonNull(newObject.getName())){
+            oldObject.setName(newObject.getName());
+        }
+        if (Objects.nonNull(newObject.getBorough())){
+            oldObject.setBorough(newObject.getBorough());
+        }
+        if (Objects.nonNull(newObject.getCuisine())){
+            oldObject.setCuisine(newObject.getCuisine());
+        }
+        return restaurantRepository.save(oldObject);
     }
 }
