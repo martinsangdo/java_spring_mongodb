@@ -24,5 +24,35 @@
     </tr>
   </tbody>
 </table>
+
+<!-- Numbered Pagination -->
+<div>
+  <span th:if="${currentPage > 0}">
+    <a th:href="@{/restaurants(page=${currentPage - 1})}">Prev</a>
+  </span>
+
+  <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+    <a th:if="${pageNum != currentPage}"
+       th:href="@{/restaurants(page=${pageNum})}"
+       th:text="${pageNum + 1}">Page</a>
+    <span th:if="${pageNum == currentPage}" th:text="${pageNum + 1}"></span>
+  </span>
+
+  <span th:if="${currentPage < totalPages - 1}">
+    <a th:href="@{/restaurants(page=${currentPage + 1})}">Next</a>
+  </span>
+</div>
+
+<style>
+  a {
+    margin: 0 5px;
+    text-decoration: none;
+  }
+  .active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+</style>
+
 </body>
 </html>

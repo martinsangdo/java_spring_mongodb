@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,5 +57,9 @@ public class RestaurantService {
 
     public List<Restaurant> findAll(){
         return restaurantRepository.findAll();
+    }
+
+    public Page<Restaurant> findAllPagination(Pageable pageable){
+        return restaurantRepository.findAll(pageable);
     }
 }
