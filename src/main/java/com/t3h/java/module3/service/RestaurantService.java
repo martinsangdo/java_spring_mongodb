@@ -1,6 +1,7 @@
 package com.t3h.java.module3.service;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -24,32 +25,35 @@ public class RestaurantService {
         if (file == null || file.isEmpty()) {
             return "Please select a JSON file to upload.";
         }
-
         int count = 0;  //how many items are saved
-        List<Restaurant> batch = new ArrayList<>();
-
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.trim().isEmpty()) continue; // skip blank lines
-                // Parse each line as a Restaurant
-                Restaurant r = new ObjectMapper().readValue(line, Restaurant.class);
-                batch.add(r);
-                count++;
-                // Insert in batches to avoid OOM for big files
-                if (batch.size() >= 500) {
-                    restaurantRepository.saveAll(batch);
-                    batch.clear();
-                }
-            }
-            // Save any remaining records
+            List<Restaurant> batch = new ArrayList<>();
+            count = buildBatch(reader, count, batch);
             if (!batch.isEmpty()) {
                 restaurantRepository.saveAll(batch);
             }
         } catch (Exception e) {
             return "Failed to import file: " + e.getMessage();
         }
-
         return "File is uploaded successfully with " + count + " documents";
+    }
+
+    public int buildBatch(BufferedReader reader, int count, List<Restaurant> batch) throws IOException{
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (line.trim().isEmpty()) continue; // skip blank lines
+            Restaurant r = new ObjectMapper().readValue(line, Restaurant.class);
+            batch.add(r);
+            count++;
+            if (batch.size() >= 500) {
+                restaurantRepository.saveAll(batch);
+                batch.clear();
+            }
+        }
+        return count;
+    }
+
+    public List<Restaurant> findAll(){
+        return restaurantRepository.findAll();
     }
 }

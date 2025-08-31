@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Grade {
-    // private Date date;   //todo parse the data "$date": 1393804800000}
     private String grade;
     private Integer score;
 }

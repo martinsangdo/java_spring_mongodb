@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurants</title>
+</head>
+<body>
+<h1>Restaurants</h1>
+<table border="1" cellpadding="5">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Borough</th>
+      <th>Cuisine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="r : ${list}">
+        <td th:text="${r.restaurant_id}">Id</td>
+        <td th:text="${r.name}">Name</td>
+        <td th:text="${r.borough}">Borough</td>
+        <td th:text="${r.cuisine}">Cuisine</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
