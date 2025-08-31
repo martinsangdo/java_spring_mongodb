@@ -17,7 +17,11 @@
   </thead>
   <tbody>
     <tr th:each="r : ${list}">
-        <td th:text="${r.restaurant_id}">Id</td>
+        <td>
+          <a th:href="@{/restaurants/detail/{id}(id=${r.restaurantId})}">
+              <span th:text="${r.restaurantId}"></span>
+          </a>
+        </td>
         <td th:text="${r.name}">Name</td>
         <td th:text="${r.borough}">Borough</td>
         <td th:text="${r.cuisine}">Cuisine</td>

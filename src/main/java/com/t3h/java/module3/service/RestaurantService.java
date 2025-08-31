@@ -62,4 +62,8 @@ public class RestaurantService {
     public Page<Restaurant> findAllPagination(Pageable pageable){
         return restaurantRepository.findAll(pageable);
     }
+
+    public Restaurant findById(String id){
+        return restaurantRepository.findFirstByRestaurantId(id);
+    }
 }
