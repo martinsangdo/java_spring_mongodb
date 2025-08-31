@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
@@ -79,10 +80,10 @@ public class RestaurantController {
     // Handle update
     @PostMapping("/restaurants/detail/{id}")
     public String updateRestaurant(@PathVariable String id,
-                                   @ModelAttribute Restaurant updatedRestaurant, Model model) {
+                                   @ModelAttribute Restaurant updatedRestaurant, RedirectAttributes redirectAttributes) {
         Restaurant oldRestaurant = restaurantService.findById(id);
         restaurantService.updateDetail(oldRestaurant, updatedRestaurant);
-        model.addAttribute("message", "Update data successfully");
-        return "unit4_restaurant_detail"; // back to list
+        redirectAttributes.addFlashAttribute("message", "Update data successfully");
+        return "redirect:/restaurants/detail/" + id;
     }
 }
