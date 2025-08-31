@@ -3,6 +3,7 @@ package com.t3h.java.module3.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,7 +46,7 @@ public class RestaurantController {
     @GetMapping(value = "/restaurants", produces = MediaType.TEXT_HTML_VALUE)
     public String listRestaurants(@RequestParam(defaultValue = "0") int page, Model model) {
         int pageSize = 10;
-        Page<Restaurant> restaurantPage = restaurantService.findAllPagination(PageRequest.of(page, pageSize));
+        Page<Restaurant> restaurantPage = restaurantService.findAllPagination(PageRequest.of(page, pageSize, Sort.by("name").ascending().and(Sort.by("cuisine").ascending())));
         int totalPages = restaurantPage.getTotalPages();
         int currentPage = page;
         // max number of pagination links to display
