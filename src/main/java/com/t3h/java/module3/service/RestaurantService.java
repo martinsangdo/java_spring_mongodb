@@ -132,10 +132,11 @@ public class RestaurantService {
         restaurant.setRestaurantId(newId);
         restaurantRepository.save(restaurant);
         // 2. Update in items collection (fetch → modify → save)
-        List<Item> items = itemRepository.findByRestaurantId(oldId);
-        for (Item item : items) {
-            item.setRestaurantId(newId);
-            itemRepository.save(item); // each save() updates one doc
-        }
+        //List<Item> items = itemRepository.findByRestaurantId(oldId);
+        itemRepository.updateRestaurantId(oldId, newId);
+        // for (Item item : items) {
+        //     item.setRestaurantId(newId);
+        //     itemRepository.save(item); // each save() updates one doc
+        // }
     }
 }
