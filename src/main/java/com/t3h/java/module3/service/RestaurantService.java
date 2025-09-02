@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -91,7 +92,6 @@ public class RestaurantService {
     private MongoTemplate mongoTemplate;
     public List<HashMap> getRestaurantWithItems(String restaurantId){
         MatchOperation matchStage = Aggregation.match(Criteria.where("restaurant_id").is(restaurantId));
-
         LookupOperation lookupStage = LookupOperation.newLookup()
                 .from("items")                 // target collection
                 .localField("restaurant_id")   // field in restaurants
@@ -99,8 +99,23 @@ public class RestaurantService {
                 .as("menuItems");              // alias field
 
         Aggregation aggregation = Aggregation.newAggregation(matchStage, lookupStage);
-
         return mongoTemplate.aggregate(aggregation, "restaurants", HashMap.class).getMappedResults();
     }
+
+    public List<HashMap> getItemsWithRestaurantInfo(String restaurantId) {
+        MatchOperation matchOperation = Aggregation.match(Criteria.where("restaurant_id").is(restaurantId));
+        LookupOperation lookupOperation = LookupOperation.newLookup()
+                .from("restaurants")
+                .localField("restaurant_id")
+                .foreignField("restaurant_id")
+                .as("restaurantInfo");
+        Aggregation aggregation = Aggregation.newAggregation(
+                matchOperation,
+                lookupOperation
+        );
+        AggregationResults<HashMap> results = mongoTemplate.aggregate(aggregation, "items", HashMap.class);
+        return results.getMappedResults();
+    }
+
 
 }

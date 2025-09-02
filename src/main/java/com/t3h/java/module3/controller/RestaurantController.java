@@ -99,4 +99,10 @@ public class RestaurantController {
         List<HashMap> info = restaurantService.getRestaurantWithItems(restaurantId);
         return new ResponseEntity<List<HashMap>>(info, HttpStatus.OK);
     }
+
+    @GetMapping("/api/restaurants/{id}/with-items-2")
+    public ResponseEntity<List<HashMap>> getItemsWithRestaurantInfo(@PathVariable("id") String restaurantId) {
+        List<HashMap> info = restaurantService.getItemsWithRestaurantInfo(restaurantId);
+        return new ResponseEntity<List<HashMap>>(info, HttpStatus.OK);
+    }
 }
