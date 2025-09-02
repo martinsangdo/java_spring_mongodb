@@ -1,10 +1,16 @@
 package com.t3h.java.module3.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import com.t3h.java.module3.model.Movie;
 import com.t3h.java.module3.model.Restaurant;
 import com.t3h.java.module3.service.RestaurantService;
 
@@ -85,5 +92,11 @@ public class RestaurantController {
         restaurantService.updateDetail(oldRestaurant, updatedRestaurant);
         redirectAttributes.addFlashAttribute("message", "Update data successfully");
         return "redirect:/restaurants/detail/" + id;
+    }
+
+    @GetMapping("/api/restaurants/{id}/with-items")
+    public ResponseEntity<List<HashMap>> getRestaurantWithItems(@PathVariable("id") String restaurantId) {
+        List<HashMap> info = restaurantService.getRestaurantWithItems(restaurantId);
+        return new ResponseEntity<List<HashMap>>(info, HttpStatus.OK);
     }
 }
