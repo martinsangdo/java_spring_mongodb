@@ -19,11 +19,14 @@ import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.t3h.java.module3.model.Item;
 import com.t3h.java.module3.model.Restaurant;
+import com.t3h.java.module3.repository.ItemRepository;
 import com.t3h.java.module3.repository.RestaurantRepository;
 
 @Service
@@ -117,5 +120,22 @@ public class RestaurantService {
         return results.getMappedResults();
     }
 
-
+    @Autowired
+    private ItemRepository itemRepository;
+    @Transactional
+    public void updateRestaurantIdWithSave(String oldId, String newId) {
+        // 1. Update in restaurants collection
+        Restaurant restaurant = restaurantRepository.findFirstByRestaurantId(oldId);
+        if (restaurant == null) {
+            throw new RuntimeException("Restaurant not found with restaurant_id: " + oldId);
+        }
+        restaurant.setRestaurantId(newId);
+        restaurantRepository.save(restaurant);
+        // 2. Update in items collection (fetch → modify → save)
+        List<Item> items = itemRepository.findByRestaurantId(oldId);
+        for (Item item : items) {
+            item.setRestaurantId(newId);
+            itemRepository.save(item); // each save() updates one doc
+        }
+    }
 }

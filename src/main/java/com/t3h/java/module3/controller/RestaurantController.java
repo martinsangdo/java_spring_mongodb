@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -104,5 +105,17 @@ public class RestaurantController {
     public ResponseEntity<List<HashMap>> getItemsWithRestaurantInfo(@PathVariable("id") String restaurantId) {
         List<HashMap> info = restaurantService.getItemsWithRestaurantInfo(restaurantId);
         return new ResponseEntity<List<HashMap>>(info, HttpStatus.OK);
+    }
+
+    @PutMapping("/api/restaurants/change-id")
+    public ResponseEntity<String> updateRestaurantId(
+            @RequestParam String oldId,
+            @RequestParam String newId) {
+        try {
+            restaurantService.updateRestaurantIdWithSave(oldId, newId);
+            return ResponseEntity.ok("Restaurant ID updated in both collections");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
     }
 }
