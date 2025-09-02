@@ -12,12 +12,15 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -138,5 +141,23 @@ public class RestaurantService {
         //     item.setRestaurantId(newId);
         //     itemRepository.save(item); // each save() updates one doc
         // }
+    }
+
+    public void bulkUpdateRestaurants() {
+        BulkOperations bulkOps = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, "restaurants");
+        // Example 1: Update borough for a specific restaurant
+        Query query1 = new Query(Criteria.where("name").is("Wendy'S"));
+        Update update1 = new Update().set("borough", "Brooklyn Center");
+        bulkOps.updateOne(query1, update1);
+        // Example 2: Update cuisine for multiple restaurants
+        Query query2 = new Query(Criteria.where("cuisine").is("Bakery"));
+        Update update2 = new Update().set("cuisine", "Pastry Shop");
+        bulkOps.updateMulti(query2, update2);
+        // Example 3: Add a new field to all restaurants
+        Query query3 = new Query(); // matches all
+        Update update3 = new Update().set("verified", true);
+        bulkOps.updateMulti(query3, update3);
+        // Execute all operations at once
+        bulkOps.execute();
     }
 }

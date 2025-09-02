@@ -118,4 +118,14 @@ public class RestaurantController {
             return ResponseEntity.status(500).body("Error: " + e.getMessage());
         }
     }
+
+    @PutMapping("/api/restaurants/bulk-actions")
+    public ResponseEntity<String> testBulkActions() {
+        try {
+            restaurantService.bulkUpdateRestaurants();
+            return ResponseEntity.ok("Restaurants are updated");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
+    }
 }
