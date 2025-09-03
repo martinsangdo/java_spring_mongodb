@@ -2,12 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Restaurant Detail</title>
+    <style>
+        .single_line {border: 1px solid #000;}
+    </style>
 </head>
 <body>
 <h2>Restaurant Detail</h2>
 
 <form th:action="@{/restaurants/detail/{id}(id=${restaurant.restaurantId})}" th:object="${restaurant}" method="post">
-    <table border="1" cellpadding="10">
+    <table class="single_line" cellpadding="10">
         <tr>
             <td>Name:</td>
             <td><input type="text" th:field="*{name}" style="width: 400px;" /><br/></td>
