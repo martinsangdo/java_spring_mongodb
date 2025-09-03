@@ -141,6 +141,9 @@ public class RestaurantService {
         //     item.setRestaurantId(newId);
         //     itemRepository.save(item); // each save() updates one doc
         // }
+        // Instead of page 1000 with skip(), use last seen ID:
+        // Query query = new Query(Criteria.where("restaurant_id").gt(lastSeenId)).limit(50);
+
     }
 
     public void bulkUpdateRestaurants() {
