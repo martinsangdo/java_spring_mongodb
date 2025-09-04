@@ -18,6 +18,7 @@ public class Movie {
     private Double Vote_Average;
     private String Genre;
     private String Poster_Url;
+    private String Original_Language;
 
     private String title;
     private Integer year;
