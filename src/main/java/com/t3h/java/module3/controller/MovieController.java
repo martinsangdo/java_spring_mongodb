@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +14,21 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.t3h.java.module3.model.Comment;
 import com.t3h.java.module3.model.Movie;
-import com.t3h.java.module3.model.Restaurant;
+import com.t3h.java.module3.service.CommentService;
 import com.t3h.java.module3.service.MovieService;
 
 @Controller
 public class MovieController {
     @Autowired
     MovieService movieService;
+    @Autowired
+    CommentService commentService;
     
     @GetMapping("/")
     public ResponseEntity<String> homepage(){
@@ -64,7 +65,7 @@ public class MovieController {
         return new ResponseEntity<>("Object is deleted", HttpStatus.OK);
     }
 
-    //pagination
+    //list movies with pagination
     @GetMapping(value = "/movies/home", produces = MediaType.TEXT_HTML_VALUE)
     public String showMovieList(@RequestParam(defaultValue = "0") int page, Model model) {
         int pageSize = 9;
@@ -87,4 +88,19 @@ public class MovieController {
         model.addAttribute("endPage", endPage);
         return "anime-main/categories";
     }
+
+    //movie detail page
+    @GetMapping(value = "/movies/detail", produces = MediaType.TEXT_HTML_VALUE)
+    public String showMovieDetailPage(Model model) {
+        return "anime-main/blog-details";
+    }
+
+    //create new comment
+    @PostMapping("/movies/detail")
+    public String createNewComment(Comment inputComment, RedirectAttributes redirectAttributes) {
+        commentService.createNewComment(inputComment);
+        redirectAttributes.addFlashAttribute("message", "Comment is saved");
+        return "anime-main/blog-details";
+    }
+
 }

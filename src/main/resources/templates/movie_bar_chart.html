@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Bar Chart Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Revenue by Month</h1>
+  <canvas id="barChart" width="600" height="400"></canvas>
+
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    let months = [[${months}]];       // Thymeleaf injects list as JS array
+    let revenues = [[${revenues}]];   // Thymeleaf injects list as JS array
+    /*]]>*/
+
+    const ctx = document.getElementById('barChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: [{
+          label: 'Revenue ($)',
+          data: revenues,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
