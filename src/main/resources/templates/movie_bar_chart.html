@@ -6,33 +6,23 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <h1>Revenue by Month</h1>
-  <canvas id="barChart" width="600" height="400"></canvas>
+  <div style="width: 600px; height: 400px;">
+    <canvas id="barChart"></canvas>
+  </div>
 
   <script th:inline="javascript">
-    /*<![CDATA[*/
-    let months = [[${months}]];       // Thymeleaf injects list as JS array
-    let revenues = [[${revenues}]];   // Thymeleaf injects list as JS array
-    /*]]>*/
-
+    const languages = [[${languageCounts.keySet()}]];
+    const counts = [[${languageCounts.values()}]];
     const ctx = document.getElementById('barChart').getContext('2d');
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: months,
+        labels: languages,
         datasets: [{
-          label: 'Revenue ($)',
-          data: revenues,
-          backgroundColor: 'rgba(54, 162, 235, 0.6)'
+          label: 'Number of Movies',
+          data: counts,
+          backgroundColor: 'blue'
         }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
       }
     });
   </script>

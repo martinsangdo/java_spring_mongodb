@@ -1,6 +1,10 @@
 package com.t3h.java.module3.controller;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -101,6 +105,22 @@ public class MovieController {
         commentService.createNewComment(inputComment);
         redirectAttributes.addFlashAttribute("message", "Comment is saved");
         return "anime-main/blog-details";
+    }
+    //display sample chart
+    @GetMapping("/movies/chart")
+    public String showChart(Model model) {
+        Map<String, Long> languageCounts = movieService.getAndGroupMoviesByLanguage();
+        Map<String, Long> filtered = languageCounts.entrySet().stream()
+            .filter(e -> e.getValue() > 50)
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (e1, e2) -> e1,
+                LinkedHashMap::new
+            ));
+
+        model.addAttribute("languageCounts", filtered);
+        return "movie_bar_chart";
     }
 
 }

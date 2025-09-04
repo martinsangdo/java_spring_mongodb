@@ -1,7 +1,9 @@
 package com.t3h.java.module3.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.t3h.java.module3.model.Movie;
-import com.t3h.java.module3.model.Restaurant;
 import com.t3h.java.module3.repository.MovieRepository;
 
 @Service
@@ -57,5 +58,16 @@ public class MovieService {
 
     public Page<Movie> findAllPagination(Pageable pageable){
         return movieRepository.findAll(pageable);
+    }
+
+    public Map<String, Long> getAndGroupMoviesByLanguage() {
+        List<Movie> movies = movieRepository.findAll();
+
+        // Group by originalLanguage and count
+        return movies.stream()
+                     .collect(Collectors.groupingBy(
+                         Movie::getOriginal_Language,
+                         Collectors.counting()
+                     ));
     }
 }
