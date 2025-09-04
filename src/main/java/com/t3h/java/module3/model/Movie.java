@@ -8,13 +8,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
-@Document(collection = "movies")    //collection name
+@Document(collection = "mymoviedb")    //collection name
 public class Movie {
-    @Id
-    private String id;
+    private String Title;
+    private String Overview;
+    private String Release_Date;
+    private Double Popularity;
+    private Integer Vote_Count;
+    private Double Vote_Average;
+    private String Genre;
+    private String Poster_Url;
+
     private String title;
     private Integer year;
     private List<String> genre;
     private String director;
     private Double rating;
 }
+
+// @Id
+//     private String id;

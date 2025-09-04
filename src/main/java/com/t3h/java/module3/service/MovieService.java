@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.t3h.java.module3.model.Movie;
+import com.t3h.java.module3.model.Restaurant;
 import com.t3h.java.module3.repository.MovieRepository;
 
 @Service
@@ -34,14 +37,14 @@ public class MovieService {
         // Update fields
         if (Objects.nonNull(params.getTitle()))
             existing.setTitle(params.getTitle());
-        if (Objects.nonNull(params.getYear()))
-            existing.setYear(params.getYear());
-        if (Objects.nonNull(params.getGenre()))
-            existing.setGenre(params.getGenre());
-        if (Objects.nonNull(params.getDirector()))
-            existing.setDirector(params.getDirector());
-        if (Objects.nonNull(params.getRating()))
-            existing.setRating(params.getRating());
+        // if (Objects.nonNull(params.getYear()))
+        //     existing.setYear(params.getYear());
+        // if (Objects.nonNull(params.getGenre()))
+        //     existing.setGenre(params.getGenre());
+        // if (Objects.nonNull(params.getDirector()))
+        //     existing.setDirector(params.getDirector());
+        // if (Objects.nonNull(params.getRating()))
+        //     existing.setRating(params.getRating());
 
         return movieRepository.save(existing);
     }
@@ -52,4 +55,7 @@ public class MovieService {
         movieRepository.delete(existing);
     }
 
+    public Page<Movie> findAllPagination(Pageable pageable){
+        return movieRepository.findAll(pageable);
+    }
 }
