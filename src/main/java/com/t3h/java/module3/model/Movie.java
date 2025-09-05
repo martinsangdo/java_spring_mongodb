@@ -30,10 +30,15 @@ public class Movie {
     private String director;
     private Double rating;
 
+    public Movie(Double vote){
+        this.Vote_Average = vote;
+    }
 
     public boolean isHighlyRated() {
         return Vote_Average >= 8.0;
     }
+
+
 }
 
 // @Id
