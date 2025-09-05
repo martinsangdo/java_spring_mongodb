@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Document(collection = "mymoviedb")    //collection name
+@NoArgsConstructor
+@AllArgsConstructor
 public class Movie {
     private String Title;
     private String Overview;
@@ -25,6 +29,11 @@ public class Movie {
     private List<String> genre;
     private String director;
     private Double rating;
+
+
+    public boolean isHighlyRated() {
+        return Vote_Average >= 8.0;
+    }
 }
 
 // @Id
