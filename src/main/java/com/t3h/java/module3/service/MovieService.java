@@ -81,13 +81,14 @@ public class MovieService {
         //1. get total of movies grouped by month (7 months that have largest number of movies)
         List<Map<String, Object>> moviesByLatestMonth = getMovieCountByMonthBasic();
         results.put("moviesByLatestMonth", moviesByLatestMonth);
-        System.out.println(moviesByLatestMonth);
-        //
-
+        //2) get total movies by each genre
+        List<Map<String, Object>> moviesByGenre = getMovieCountByGenre();
+        results.put("moviesByGenre", moviesByGenre);
 
         //return all data
         return results;
     }
+    //
     public List<Map<String, Object>> getMovieCountByMonthBasic() {
         List<Movie> movies = movieRepository.findAll();
 
@@ -121,4 +122,35 @@ public class MovieService {
 
         return result;
     }
+    //
+    public List<Map<String, Object>> getMovieCountByGenre() {
+        List<Movie> movies = movieRepository.findAll();
+    
+        Map<String, Long> genreCount = new HashMap<>();
+    
+        for (Movie movie : movies) {
+            if (movie.getGenre() != null && !movie.getGenre().isEmpty()) {
+                String[] genres = movie.getGenre().split(",");
+                for (String g : genres) {
+                    String genre = g.trim();
+                    genreCount.put(genre, genreCount.getOrDefault(genre, 0L) + 1);
+                }
+            }
+        }
+    
+        // Convert to list of maps for JSON response
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map.Entry<String, Long> entry : genreCount.entrySet()) {
+            Map<String, Object> obj = new HashMap<>();
+            obj.put("genre", entry.getKey());
+            obj.put("totalMovies", entry.getValue());
+            result.add(obj);
+        }
+    
+        // Sort by totalMovies descending
+        result.sort((a, b) -> ((Long) b.get("totalMovies")).compareTo((Long) a.get("totalMovies")));
+    
+        return result;
+    }
+    
 }
