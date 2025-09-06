@@ -122,5 +122,24 @@ public class MovieController {
         model.addAttribute("languageCounts", filtered);
         return "movie_bar_chart";
     }
+    //the function to solve quadratic
+    @GetMapping("/api/solve_quadratic")
+    public ResponseEntity<double[]> solveQuadratic(
+        @RequestParam Double a, @RequestParam Double b, @RequestParam Double c) {
+            if (a == 0) throw new IllegalArgumentException("a cannot be 0");
+            double discriminant = b * b - 4 * a * c;
+            if (discriminant < 0){
+                return new ResponseEntity<>(new double[0], HttpStatus.OK);
+            }
+            if (discriminant == 0) {
+                return new ResponseEntity<>(new double[] { -b / (2 * a) }, HttpStatus.OK);
+            }
+            double sqrtD = Math.sqrt(discriminant);
+            double[] results = new double[] {
+                (-b + sqrtD) / (2 * a),
+                (-b - sqrtD) / (2 * a)
+            };
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
 
 }
