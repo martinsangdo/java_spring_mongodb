@@ -110,7 +110,6 @@ public class MovieService {
             }
             return cmp;
         });
-
         // Take top 7
         List<Map<String, Object>> result = new ArrayList<>();
         for (int i = 0; i < Math.min(7, sortedEntries.size()); i++) {
