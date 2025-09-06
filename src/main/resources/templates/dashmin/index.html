@@ -44,8 +44,8 @@
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">English</p>
+                                <h6 class="mb-0" id="total_by_lang_en"></h6>
                             </div>
                         </div>
                     </div>
@@ -53,8 +53,8 @@
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Japanese</p>
+                                <h6 class="mb-0" id="total_by_lang_ja"></h6>
                             </div>
                         </div>
                     </div>
@@ -62,8 +62,8 @@
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-area fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Spain</p>
+                                <h6 class="mb-0" id="total_by_lang_es"></h6>
                             </div>
                         </div>
                     </div>
@@ -71,8 +71,8 @@
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-pie fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">French</p>
+                                <h6 class="mb-0" id="total_by_lang_fr"></h6>
                             </div>
                         </div>
                     </div>
@@ -354,6 +354,10 @@
             moviesGenreValues.push(moviesByGenre[i]['totalMovies']);
         }
         //3
+        let top4Languages = [[${data.top4Languages}]];
+        for (var i=0; i<top4Languages.length; i++){
+            document.getElementById('total_by_lang_' + top4Languages[i]['language']).textContent = top4Languages[i]['totalMovies'];
+        }
 
     </script>
     <!-- Template Javascript -->

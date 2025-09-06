@@ -84,7 +84,9 @@ public class MovieService {
         //2) get total movies by each genre
         List<Map<String, Object>> moviesByGenre = getMovieCountByGenre();
         results.put("moviesByGenre", moviesByGenre);
-
+        //3) get 4 top languages
+        List<Map<String, Object>> top4Languages = getTop4Languages();
+        results.put("top4Languages", top4Languages);
         //return all data
         return results;
     }
@@ -152,5 +154,30 @@ public class MovieService {
     
         return result;
     }
+    //
+    public List<Map<String, Object>> getTop4Languages() {
+        List<Movie> movies = movieRepository.findAll();
+    
+        // Count movies grouped by language
+        Map<String, Long> langCount = movies.stream()
+                .filter(m -> m.getOriginal_Language() != null && !m.getOriginal_Language().isEmpty())
+                .collect(Collectors.groupingBy(Movie::getOriginal_Language, Collectors.counting()));
+    
+        // Sort by count descending
+        List<Map.Entry<String, Long>> sorted = new ArrayList<>(langCount.entrySet());
+        sorted.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+    
+        // Take top 4
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (int i = 0; i < Math.min(4, sorted.size()); i++) {
+            Map<String, Object> obj = new HashMap<>();
+            obj.put("language", sorted.get(i).getKey());
+            obj.put("totalMovies", sorted.get(i).getValue());
+            result.add(obj);
+        }
+    
+        return result;
+    }
+    
     
 }
