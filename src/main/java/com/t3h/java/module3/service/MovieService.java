@@ -87,6 +87,9 @@ public class MovieService {
         //3) get 4 top languages
         List<Map<String, Object>> top4Languages = getTop4Languages();
         results.put("top4Languages", top4Languages);
+        //4)
+        List<Movie> top5ByVoteAverage = getTop5MoviesByVoteAverage();
+        results.put("top5ByVoteAverage", top5ByVoteAverage);
         //return all data
         return results;
     }
@@ -178,6 +181,25 @@ public class MovieService {
     
         return result;
     }
+    //4
+    public List<Movie> getTop5MoviesByVoteAverage() {
+        List<Movie> movies = movieRepository.findAll();
+    
+        return movies.stream()
+                .filter(m -> m.getTitle() != null && !m.getTitle().trim().isEmpty()) // exclude empty titles
+                .filter(m -> m.getVote_Average() != null && m.getVote_Count() != null) // avoid nulls
+                .sorted((a, b) -> {
+                    int cmp = Double.compare(b.getVote_Average(), a.getVote_Average());
+                    if (cmp == 0) {
+                        return Integer.compare(b.getVote_Count(), a.getVote_Count());
+                    }
+                    return cmp;
+                })
+                .limit(5)
+                .collect(Collectors.toList());
+    }
+    
+    
     
     
 }

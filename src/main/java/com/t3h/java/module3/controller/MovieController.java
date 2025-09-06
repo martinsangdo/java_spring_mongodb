@@ -143,7 +143,7 @@ public class MovieController {
     }
 
 
-    //movie dashboard
+    //movie dashboard for mini project
     @GetMapping(value = "/movies/dashboard", produces = MediaType.TEXT_HTML_VALUE)
     public String showMovieDashboard(Model model) {
         Map<String, Object> data = movieService.getDataForDashboard();
