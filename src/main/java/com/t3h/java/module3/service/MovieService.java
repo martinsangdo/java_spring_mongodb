@@ -93,7 +93,9 @@ public class MovieService {
         //5)
         List<Movie> top5ByReleaseDate = get5LatestMovies();
         results.put("top5ByReleaseDate", top5ByReleaseDate);
-        
+         //6)
+         List<Movie> top10ByPopularity = top10ByPopularity();
+         results.put("top10ByPopularity", top10ByPopularity);
         //return all data
         return results;
     }
@@ -185,7 +187,13 @@ public class MovieService {
     
         return result;
     }
-    //4
+    /*
+     * 4
+     * Exclude movies with empty or null Title.
+        Sort by Vote_Average (descending).
+        If Vote_Average is the same → sort by Vote_Count (descending).
+        Take top 5.
+     */
     public List<Movie> getTop5MoviesByVoteAverage() {
         List<Movie> movies = movieRepository.findAll();
     
@@ -202,7 +210,14 @@ public class MovieService {
                 .limit(5)
                 .collect(Collectors.toList());
     }
-    //5
+    /*
+     * 5
+     * Step 1: Get only movies with a non-empty Title.
+        Step 2: Sort first by Release_Date (latest first).
+        Step 3: Then sort by Vote_Average (descending).
+        Step 4: If equal → sort by Vote_Count (descending).
+        Step 5: Take top 5 movies.
+     */
     public List<Movie> get5LatestMovies() {
         List<Movie> movies = movieRepository.findAll();
     
@@ -230,6 +245,29 @@ public class MovieService {
                     return cmp;
                 })
                 .limit(5)
+                .collect(Collectors.toList());
+    }
+    /*
+     * 6
+     * Exclude movies with empty/null Title.
+        Sort by Popularity (descending).
+        If same Popularity → sort by Vote_Count (descending).
+        Take top 10 movies.
+     */
+    public List<Movie> top10ByPopularity() {
+        List<Movie> movies = movieRepository.findAll();
+    
+        return movies.stream()
+                .filter(m -> m.getTitle() != null && !m.getTitle().trim().isEmpty()) // skip empty titles
+                .filter(m -> m.getPopularity() != null && m.getVote_Count() != null) // skip nulls
+                .sorted((a, b) -> {
+                    int cmp = Double.compare(b.getPopularity(), a.getPopularity()); // sort by popularity
+                    if (cmp == 0) {
+                        cmp = Integer.compare(b.getVote_Count(), a.getVote_Count()); // tie-breaker
+                    }
+                    return cmp;
+                })
+                .limit(10)
                 .collect(Collectors.toList());
     }
     
