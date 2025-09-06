@@ -142,4 +142,10 @@ public class MovieController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
+
+    //movie dashboard
+    @GetMapping(value = "/movies/dashboard", produces = MediaType.TEXT_HTML_VALUE)
+    public String showMovieDashboard(Model model) {
+        return "dashmin/index";
+    }
 }
