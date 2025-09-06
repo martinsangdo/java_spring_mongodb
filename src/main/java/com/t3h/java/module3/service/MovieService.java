@@ -90,6 +90,10 @@ public class MovieService {
         //4)
         List<Movie> top5ByVoteAverage = getTop5MoviesByVoteAverage();
         results.put("top5ByVoteAverage", top5ByVoteAverage);
+        //5)
+        List<Movie> top5ByReleaseDate = get5LatestMovies();
+        results.put("top5ByReleaseDate", top5ByReleaseDate);
+        
         //return all data
         return results;
     }
@@ -192,6 +196,36 @@ public class MovieService {
                     int cmp = Double.compare(b.getVote_Average(), a.getVote_Average());
                     if (cmp == 0) {
                         return Integer.compare(b.getVote_Count(), a.getVote_Count());
+                    }
+                    return cmp;
+                })
+                .limit(5)
+                .collect(Collectors.toList());
+    }
+    //5
+    public List<Movie> get5LatestMovies() {
+        List<Movie> movies = movieRepository.findAll();
+    
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
+        return movies.stream()
+                .filter(m -> m.getTitle() != null && !m.getTitle().trim().isEmpty()) // exclude empty title
+                .filter(m -> m.getRelease_Date() != null && !m.getRelease_Date().isEmpty()) // valid date
+                .filter(m -> m.getVote_Average() != null && m.getVote_Count() != null) // avoid nulls
+                .sorted((a, b) -> {
+                    // Parse release dates
+                    LocalDate dateA = LocalDate.parse(a.getRelease_Date(), formatter);
+                    LocalDate dateB = LocalDate.parse(b.getRelease_Date(), formatter);
+    
+                    // First: latest release date
+                    int cmp = dateB.compareTo(dateA);
+                    if (cmp == 0) {
+                        // Second: vote average
+                        cmp = Double.compare(b.getVote_Average(), a.getVote_Average());
+                    }
+                    if (cmp == 0) {
+                        // Third: vote count
+                        cmp = Integer.compare(b.getVote_Count(), a.getVote_Count());
                     }
                     return cmp;
                 })
