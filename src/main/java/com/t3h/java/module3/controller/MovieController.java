@@ -146,6 +146,7 @@ public class MovieController {
     //movie dashboard
     @GetMapping(value = "/movies/dashboard", produces = MediaType.TEXT_HTML_VALUE)
     public String showMovieDashboard(Model model) {
+        Map<String, Object> data = movieService.getDataForDashboard();
         return "dashmin/index";
     }
 }

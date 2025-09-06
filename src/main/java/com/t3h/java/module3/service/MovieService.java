@@ -1,5 +1,10 @@
 package com.t3h.java.module3.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -69,5 +74,52 @@ public class MovieService {
                          Movie::getOriginal_Language,
                          Collectors.counting()
                      ));
+    }
+    //mini project
+    public Map<String, Object> getDataForDashboard(){
+        Map<String, Object> results = new HashMap<>();
+        //1. get total of movies grouped by month (7 months that have largest number of movies)
+        List<Map<String, Object>> moviesByLatestMonth = getMovieCountByMonthBasic();
+        results.put("moviesByLatestMonth", moviesByLatestMonth);
+        System.out.println(moviesByLatestMonth);
+        //
+
+
+        //return all data
+        return results;
+    }
+    public List<Map<String, Object>> getMovieCountByMonthBasic() {
+        List<Movie> movies = movieRepository.findAll();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Count movies grouped by year-month
+        Map<String, Long> countByMonth = movies.stream()
+                .filter(m -> m.getRelease_Date() != null)
+                .collect(Collectors.groupingBy(m -> {
+                    LocalDate date = LocalDate.parse(m.getRelease_Date(), formatter);
+                    return date.getYear() + "-" + String.format("%02d", date.getMonthValue());
+                }, Collectors.counting()));
+
+        // Sort by count (descending), then by month (descending for tie-breaking)
+        List<Map.Entry<String, Long>> sortedEntries = new ArrayList<>(countByMonth.entrySet());
+        sortedEntries.sort((a, b) -> {
+            int cmp = b.getValue().compareTo(a.getValue());
+            if (cmp == 0) {
+                return b.getKey().compareTo(a.getKey()); // optional tie-breaker
+            }
+            return cmp;
+        });
+
+        // Take top 7
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (int i = 0; i < Math.min(7, sortedEntries.size()); i++) {
+            Map<String, Object> obj = new HashMap<>();
+            obj.put("month", sortedEntries.get(i).getKey());
+            obj.put("totalMovies", sortedEntries.get(i).getValue());
+            result.add(obj);
+        }
+
+        return result;
     }
 }
