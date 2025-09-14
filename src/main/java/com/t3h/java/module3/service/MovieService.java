@@ -27,6 +27,14 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public Movie findByTitle(String title) throws Exception{
+        Movie movie = movieRepository.findByTitle(title);
+            if (Objects.isNull(movie)){
+                throw new Exception("Movie not found");
+            }
+        return movie;
+    }
+
     public List<Movie> searchByKeyword(String keyString){
         System.out.println(keyString);
         return movieRepository.findByTitleContainingIgnoreCase(keyString);

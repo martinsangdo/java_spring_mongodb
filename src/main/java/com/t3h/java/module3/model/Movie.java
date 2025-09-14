@@ -2,7 +2,6 @@ package com.t3h.java.module3.model;
 
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -37,7 +36,6 @@ public class Movie {
     public boolean isHighlyRated() {
         return Vote_Average >= 8.0;
     }
-
 
 }
 

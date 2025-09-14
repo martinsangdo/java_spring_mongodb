@@ -1,6 +1,5 @@
 package com.t3h.java.module3.controller;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -148,5 +146,15 @@ public class MovieController {
     public String showMovieDashboard(Model model) {
         Map<String, Object> data = movieService.getDataForDashboard();
         return "dashmin/index";
+    }
+
+    @GetMapping("/movies/find_title")
+    public ResponseEntity<String> findByTitle(@RequestParam String title){
+        try {
+            Movie movie = movieService.findByTitle(title);
+            return new ResponseEntity<String>(movie.getTitle(), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
