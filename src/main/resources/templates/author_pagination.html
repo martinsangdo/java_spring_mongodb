@@ -1,0 +1,68 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurants</title>
+  <style>
+    .single_line {border: 1px solid #000;}
+    .single_line td {border: 1px solid #000;}
+  </style>
+</head>
+<body>
+<h1>Authors</h1>
+<table class="single_line" cellpadding="5">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>Birth Year</th>
+      <th>Genre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="r : ${list}">
+        <td>
+          <a th:href="@{/authors/detail/{id}(id=${r._id})}">
+              <span th:text="${r._id}"></span>
+          </a>
+        </td>
+        <td th:text="${r.name}"></td>
+        <td th:text="${r.country}"></td>
+        <td th:text="${r.birthYear}"></td>
+        <td th:text="${r.genre}"></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Numbered Pagination -->
+<div>
+  <span th:if="${currentPage > 0}">
+    <a th:href="@{/restaurants(page=${currentPage - 1})}">Prev</a>
+  </span>
+
+  <span th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+    <a th:if="${pageNum != currentPage}"
+       th:href="@{/restaurants(page=${pageNum})}"
+       th:text="${pageNum + 1}">Page</a>
+    <span th:if="${pageNum == currentPage}" th:text="${pageNum + 1}"></span>
+  </span>
+
+  <span th:if="${currentPage < totalPages - 1}">
+    <a th:href="@{/restaurants(page=${currentPage + 1})}">Next</a>
+  </span>
+</div>
+
+<style>
+  a {
+    margin: 0 5px;
+    text-decoration: none;
+  }
+  .active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+</style>
+
+</body>
+</html>

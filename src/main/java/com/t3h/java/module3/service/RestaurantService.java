@@ -2,7 +2,6 @@ package com.t3h.java.module3.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +26,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.t3h.java.module3.model.Item;
 import com.t3h.java.module3.model.Restaurant;
 import com.t3h.java.module3.repository.ItemRepository;
 import com.t3h.java.module3.repository.RestaurantRepository;

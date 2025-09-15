@@ -5,15 +5,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.t3h.java.module3.model.Author;
 import com.t3h.java.module3.model.Song;
+import com.t3h.java.module3.repository.AuthorRepository;
 import com.t3h.java.module3.repository.SongRepository;
 
 @Service
 public class SongService {
     @Autowired
     SongRepository songRepository;
+    @Autowired
+    AuthorRepository authorRepository;
     
     public List<Song> getLatestSongs() {
         return songRepository.findTop5ByOrderByYearDesc();
@@ -63,5 +69,9 @@ public class SongService {
             return true;
         }
         return false;
+    }
+    //authors
+    public Page<Author> findAllAuthorsPagination(Pageable pageable){
+        return authorRepository.findAll(pageable);
     }
 }

@@ -2,7 +2,6 @@ package com.t3h.java.module3.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import com.t3h.java.module3.model.Movie;
 import com.t3h.java.module3.model.Restaurant;
 import com.t3h.java.module3.service.RestaurantService;
 
