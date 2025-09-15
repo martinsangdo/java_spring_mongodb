@@ -2,6 +2,7 @@ package com.t3h.java.module3.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class SongService {
     @Autowired
     AuthorRepository authorRepository;
     
+    public Song getSongDetail(Long id){
+        Song song = songRepository.findBy_id(id);
+        return song;
+    }
     public List<Song> getLatestSongs() {
         return songRepository.findTop5ByOrderByYearDesc();
     }
@@ -71,7 +76,21 @@ public class SongService {
         }
         return false;
     }
+    public void updateSong(Long id, Song updatedSong){
+        Song existing = songRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid song id: " + id));
+
+        existing.setTitle(updatedSong.getTitle());
+        existing.setYear(updatedSong.getYear());
+        existing.setDuration(updatedSong.getDuration());
+        existing.setAuthorId(updatedSong.getAuthorId());
+
+        songRepository.save(existing);
+    }
     //authors
+    public List<Author> getAllAuthors() {
+        return authorRepository.findAll();
+    }
     public Page<Author> findAllAuthorsPagination(Pageable pageable){
         return authorRepository.findAll(pageable);
     }

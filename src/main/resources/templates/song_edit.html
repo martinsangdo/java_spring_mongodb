@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Song</title>
+    <style>
+        table.form-table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+        table.form-table th, table.form-table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        table.form-table th {
+            background-color: #f2f2f2;
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Edit Song</h2>
+
+<form th:action="@{/songs/edit/{id}(id=${song._id})}" th:object="${song}" method="post">
+    <table class="form-table">
+        <tr>
+            <th>Title</th>
+            <td><input type="text" th:field="*{title}" /></td>
+        </tr>
+        <tr>
+            <th>Year</th>
+            <td><input type="number" th:field="*{year}" /></td>
+        </tr>
+        <tr>
+            <th>Duration (seconds)</th>
+            <td><input type="number" th:field="*{duration}" /></td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>
+                <select th:field="*{authorId}">
+                    <option th:each="a : ${authors}"
+                            th:value="${a._id}"
+                            th:text="${a.name}"
+                            th:selected="${a._id == song.authorId}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center;">
+                <button type="submit">Save</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

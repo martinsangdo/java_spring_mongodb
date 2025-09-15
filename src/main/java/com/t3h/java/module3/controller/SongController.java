@@ -3,6 +3,7 @@ package com.t3h.java.module3.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -109,5 +112,23 @@ public class SongController {
         List<SongWithAuthor> songs = songService.getAllSongsWithAuthors();
         model.addAttribute("songs", songs);
         return "songs_with_author"; // Thymeleaf template songs.html
+    }
+    //5.2
+    // Show edit form
+    @GetMapping("/songs/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Song song = songService.getSongDetail(id);
+        List<Author> authors = songService.getAllAuthors();
+        System.out.println(song);
+        model.addAttribute("song", song);
+        model.addAttribute("authors", authors);
+        return "song_edit";
+    }
+
+    // Handle form submit
+    @PostMapping("/songs/edit/{id}")
+    public String updateSong(@PathVariable Long id, @ModelAttribute Song updatedSong) {
+        songService.updateSong(id, updatedSong);
+        return "redirect:/songs/with_authors";
     }
 }
