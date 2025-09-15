@@ -89,5 +89,16 @@ public class SongController {
 
         return "author_pagination";
     }
-
+    //4.2
+    @GetMapping("/authors/filter")
+    public String authorsPageWithFilter(Model model) {
+        model.addAttribute("countries", songService.getAllCountries());
+        return "authors_by_country";
+    }
+    //4.2
+    @GetMapping("/api/authors/by_country")
+    public ResponseEntity<List<Author>> getAuthorsByCountry(@RequestParam String country) {
+        List<Author> results = songService.getAuthorsByCountry(country);
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Authors by Country</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .single_line {border: 1px solid #000;}
+        .single_line td {border: 1px solid #000;}
+      </style>
+</head>
+<body>
+
+<h2>Select a Country</h2>
+
+<select id="countrySelect">
+    <option value="">-- Select Country --</option>
+    <option th:each="c : ${countries}" th:value="${c}" th:text="${c}"></option>
+</select>
+
+<h3>Authors</h3>
+<table class="single_line" id="authorsTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Birth Year</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Filled dynamically -->
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $("#countrySelect").change(function () {
+            let country = $(this).val();
+            if (country) {
+                $.ajax({
+                    url: "/api/authors/by_country",
+                    type: "GET",
+                    data: {country: country},
+                    success: function (data) {
+                        let tbody = $("#authorsTable tbody");
+                        tbody.empty();
+                        data.forEach(author => {
+                            tbody.append(
+                                "<tr>" +
+                                "<td>" + author._id + "</td>" +
+                                "<td>" + author.name + "</td>" +
+                                "<td>" + author.birthYear + "</td>" +
+                                "<td>" + author.genre + "</td>" +
+                                "</tr>"
+                            );
+                        });
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

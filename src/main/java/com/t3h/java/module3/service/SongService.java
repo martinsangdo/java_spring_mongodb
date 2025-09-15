@@ -74,4 +74,15 @@ public class SongService {
     public Page<Author> findAllAuthorsPagination(Pageable pageable){
         return authorRepository.findAll(pageable);
     }
+    public List<Author> getAuthorsByCountry(String country) {
+        return authorRepository.findByCountry(country);
+    }
+
+    public List<String> getAllCountries() {
+        return authorRepository.findAll()
+                .stream()
+                .map(Author::getCountry)
+                .distinct()
+                .toList();
+    }
 }
