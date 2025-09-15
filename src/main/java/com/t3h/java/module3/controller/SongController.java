@@ -1,6 +1,7 @@
 package com.t3h.java.module3.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,11 @@ public class SongController {
     @GetMapping("/api/song/list_by_author")
     public ResponseEntity<List<Song>> findByAuthorId(@RequestParam(value = "author_id") Long authorId) {
         return new ResponseEntity<>(songService.findByAuthorId(authorId), HttpStatus.OK);
+    }
+
+    //3.1 3
+    @GetMapping("/api/song/list_by_year")
+    public ResponseEntity<Map<Long, Long>> countSongsByAuthor() {
+        return new ResponseEntity<Map<Long, Long>>(songService.getSongCountByAuthor(), HttpStatus.OK);
     }
 }

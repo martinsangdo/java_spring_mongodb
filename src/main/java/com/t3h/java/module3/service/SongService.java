@@ -1,6 +1,8 @@
 package com.t3h.java.module3.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +21,12 @@ public class SongService {
 
     public List<Song> findByAuthorId(Long authorId) {
         return songRepository.findByAuthorId(authorId);
+    }
+
+    public Map<Long, Long> getSongCountByAuthor() {
+        List<Song> songs = songRepository.findAll();
+
+        return songs.stream()
+                .collect(Collectors.groupingBy(Song::getAuthorId, Collectors.counting()));
     }
 }
