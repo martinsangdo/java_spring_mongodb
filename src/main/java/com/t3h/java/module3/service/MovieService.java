@@ -27,6 +27,14 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public Movie findByTitle(String title) throws Exception{
+        Movie movie = movieRepository.findByTitle(title);
+            if (Objects.isNull(movie)){
+                throw new Exception("Movie not found");
+            }
+        return movie;
+    }
+
     public List<Movie> searchByKeyword(String keyString){
         System.out.println(keyString);
         return movieRepository.findByTitleContainingIgnoreCase(keyString);
@@ -70,8 +78,9 @@ public class MovieService {
 
         // Group by originalLanguage and count
         return movies.stream()
+                    .filter(m -> m.getOriginalLanguage() != null)
                      .collect(Collectors.groupingBy(
-                         Movie::getOriginal_Language,
+                         Movie::getOriginalLanguage,
                          Collectors.counting()
                      ));
     }
@@ -107,9 +116,9 @@ public class MovieService {
 
         // Count movies grouped by year-month
         Map<String, Long> countByMonth = movies.stream()
-                .filter(m -> m.getRelease_Date() != null)
+                .filter(m -> m.getReleaseDate() != null)
                 .collect(Collectors.groupingBy(m -> {
-                    LocalDate date = LocalDate.parse(m.getRelease_Date(), formatter);
+                    LocalDate date = LocalDate.parse(m.getReleaseDate(), formatter);
                     return date.getYear() + "-" + String.format("%02d", date.getMonthValue());
                 }, Collectors.counting()));
 

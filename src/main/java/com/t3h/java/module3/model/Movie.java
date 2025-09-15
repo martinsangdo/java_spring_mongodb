@@ -2,8 +2,8 @@ package com.t3h.java.module3.model;
 
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,30 +14,35 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Movie {
-    private String Title;
-    private String Overview;
-    private String Release_Date;
-    private Double Popularity;
-    private Integer Vote_Count;
-    private Double Vote_Average;
-    private String Genre;
-    private String Poster_Url;
-    private String Original_Language;
-
+    @Field("Title")
     private String title;
+    @Field("Overview")
+    private String overview;
+    @Field("Release_Date")
+    private String releaseDate;
+    @Field("Popularity")
+    private Double popularity;
+    @Field("Vote_Count")
+    private Integer voteCount;
+    @Field("Vote_Average")
+    private Double voteAverage;
+    @Field("Genre")
+    private String genre;
+    @Field("Poster_Url")
+    private String posterUrl;
+    @Field("Original_Language")
+    private String originalLanguage;
     private Integer year;
-    private List<String> genre;
     private String director;
     private Double rating;
 
     public Movie(Double vote){
-        this.Vote_Average = vote;
+        this.voteAverage = vote;
     }
 
     public boolean isHighlyRated() {
-        return Vote_Average >= 8.0;
+        return this.voteAverage >= 8.0;
     }
-
 
 }
 
