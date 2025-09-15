@@ -16,4 +16,8 @@ public class SongService {
     public List<Song> getLatestSongs() {
         return songRepository.findTop5ByOrderByYearDesc();
     }
+
+    public List<Song> findByAuthorId(Long authorId) {
+        return songRepository.findByAuthorId(authorId);
+    }
 }

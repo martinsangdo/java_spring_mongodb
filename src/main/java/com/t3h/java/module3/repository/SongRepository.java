@@ -9,6 +9,6 @@ import com.t3h.java.module3.model.Song;
 
 @Repository
 public interface SongRepository extends MongoRepository<Song, String> {
-        List<Song> findTop5ByOrderByYearDesc();
-
+    List<Song> findTop5ByOrderByYearDesc();
+    List<Song> findByAuthorId(Long authorId);
 }
