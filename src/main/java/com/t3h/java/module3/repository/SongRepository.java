@@ -18,4 +18,7 @@ public interface SongRepository extends MongoRepository<Song, Long> {
            "FROM Songs s GROUP BY s.author_id ORDER BY COUNT(s) DESC")
     List<Object[]> countSongsByAuthor();
     boolean existsById(Long songId);
+
+    @Query("{ 'duration': { $gte: ?0, $lte: ?1 }, 'year': { $gte: ?2, $lte: ?3 } }")
+    List<Song> findByDurationRangeAndYear(Long minDuration, Long maxDuration, Integer minYear, Integer maxYear);
 }

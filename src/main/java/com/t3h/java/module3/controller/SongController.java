@@ -119,7 +119,6 @@ public class SongController {
     public String showEditForm(@PathVariable Long id, Model model) {
         Song song = songService.getSongDetail(id);
         List<Author> authors = songService.getAllAuthors();
-        System.out.println(song);
         model.addAttribute("song", song);
         model.addAttribute("authors", authors);
         return "song_edit";
@@ -130,5 +129,25 @@ public class SongController {
     public String updateSong(@PathVariable Long id, @ModelAttribute Song updatedSong) {
         songService.updateSong(id, updatedSong);
         return "redirect:/songs/with_authors";
+    }
+    //6.1
+    @GetMapping("/songs/filter")
+    public String filterSongs(
+            @RequestParam(required = false) Long minDuration,
+            @RequestParam(required = false) Long maxDuration,
+            @RequestParam(required = false) Integer minYear,
+            @RequestParam(required = false) Integer maxYear,
+            Model model
+    ) {
+        List<Song> songs = songService.filterByDurationAndYear(minDuration, maxDuration, minYear, maxYear);
+        if (songs == null) {
+            songs = List.of(); // never null
+        }
+        model.addAttribute("songs", songs);
+        model.addAttribute("minDuration", minDuration);
+        model.addAttribute("maxDuration", maxDuration);
+        model.addAttribute("minYear", minYear);
+        model.addAttribute("maxYear", minYear);
+        return "songs_filter";
     }
 }

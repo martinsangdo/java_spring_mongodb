@@ -87,6 +87,15 @@ public class SongService {
 
         songRepository.save(existing);
     }
+    public List<Song> filterByDurationAndYear(Long minDuration, Long maxDuration, Integer minYear, Integer maxYear) {
+        // validate / fallback if needed
+        if (minDuration == null) minDuration = 0L;
+        if (maxDuration == null) maxDuration = Long.MAX_VALUE;
+        if (minYear == null) minYear = Integer.MIN_VALUE;
+        if (maxYear == null) maxYear = Integer.MAX_VALUE;
+
+        return songRepository.findByDurationRangeAndYear(minDuration, maxDuration, minYear, maxYear);
+    }
     //authors
     public List<Author> getAllAuthors() {
         return authorRepository.findAll();

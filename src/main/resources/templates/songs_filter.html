@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Filter Songs</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin-top: 16px;
+        }
+        table, th, td {
+            border: 1px solid #333;
+        }
+        th, td {
+            padding: 8px 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Filter Songs</h2>
+
+<form method="get" th:action="@{/songs/filter}">
+    <label>Min duration (sec):
+        <input type="number" name="minDuration" th:value="${minDuration}" />
+    </label>
+    <label>Max duration (sec):
+        <input type="number" name="maxDuration" th:value="${maxDuration}" />
+    </label>
+    <label>Min year:
+        <input type="number" name="minYear" th:value="${minYear}" />
+    </label>
+    <label>Max year:
+        <input type="number" name="maxYear" th:value="${maxYear}" />
+    </label>
+    <button type="submit">Search</button>
+</form>
+
+<table th:if="${#lists.isEmpty(songs) == false}">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Duration (sec)</th>
+            <th>AuthorId</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="song : ${songs}">
+            <td th:text="${song._id}"></td>
+            <td th:text="${song.title}"></td>
+            <td th:text="${song.year}"></td>
+            <td th:text="${song.duration}"></td>
+            <td th:text="${song.authorId}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(songs)}">No songs found.</p>
+
+</body>
+</html>
