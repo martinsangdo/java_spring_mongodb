@@ -110,6 +110,7 @@ public class MovieController {
         Map<String, Long> languageCounts = movieService.getAndGroupMoviesByLanguage();
         Map<String, Long> filtered = languageCounts.entrySet().stream()
             .filter(e -> e.getValue() > 50)
+            .sorted(Map.Entry.<String, Long>comparingByValue()) // sort ascending
             .collect(Collectors.toMap(
                 Map.Entry::getKey,
                 Map.Entry::getValue,

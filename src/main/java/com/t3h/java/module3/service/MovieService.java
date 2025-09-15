@@ -78,6 +78,7 @@ public class MovieService {
 
         // Group by originalLanguage and count
         return movies.stream()
+                    .filter(m -> m.getOriginalLanguage() != null)
                      .collect(Collectors.groupingBy(
                          Movie::getOriginalLanguage,
                          Collectors.counting()
