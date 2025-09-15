@@ -164,4 +164,10 @@ public class SongService {
         }
     }
     
+    public List<Author> searchAuthors(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return authorRepository.findAll();
+        }
+        return authorRepository.searchByNameOrCountry(keyword);
+    }
 }

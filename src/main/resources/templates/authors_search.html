@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Authors</title>
+    <style>
+        .single_line {border: 1px solid #000;}
+      </style>
+</head>
+<body>
+<h2>Search Authors</h2>
+
+<form th:action="@{/authors/search}" method="get">
+    <input type="text" name="keyword" th:value="${keyword}" placeholder="Enter name or country"/>
+    <button type="submit">Search</button>
+</form>
+
+<hr/>
+
+<table class="single_line" th:if="${#lists.isEmpty(authors) == false}">
+    <tr>
+        <th>Name</th>
+        <th>Country</th>
+        <th>Genre</th>
+        <th>Birth Year</th>
+    </tr>
+    <tr th:each="author : ${authors}">
+        <td th:text="${author.name}"></td>
+        <td th:text="${author.country}"></td>
+        <td th:text="${author.genre}"></td>
+        <td th:text="${author.birthYear}"></td>
+    </tr>
+</table>
+
+<p th:if="${#lists.isEmpty(authors)}">No authors found.</p>
+
+</body>
+</html>

@@ -164,4 +164,12 @@ public class SongController {
         songService.updateAuthorsActiveStatus(authorIds);
         return "redirect:/authors/list";
     }
+    //6.3
+    @GetMapping("/authors/search")
+    public String searchAuthors(@RequestParam(required = false) String keyword, Model model) {
+        List<Author> authors = songService.searchAuthors(keyword);
+        model.addAttribute("authors", authors);
+        model.addAttribute("keyword", keyword);
+        return "authors_search";
+    }
 }
