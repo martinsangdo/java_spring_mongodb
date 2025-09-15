@@ -1,5 +1,6 @@
 package com.t3h.java.module3.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -37,9 +40,24 @@ public class SongController {
     public ResponseEntity<Map<Long, Long>> countSongsByAuthor() {
         return new ResponseEntity<Map<Long, Long>>(songService.getSongCountByAuthor(), HttpStatus.OK);
     }
-
+    //3.2
     @PutMapping("/api/song/update_duration")
     public ResponseEntity<Long> updateDurationsToFormatted() {
         return new ResponseEntity<Long>(songService.updateDurationsToFormatted(), HttpStatus.OK);
+    }
+
+    //3.3
+    @DeleteMapping("/api/song/{id}")
+    public ResponseEntity<Map<String, Object>> deleteSong(@PathVariable Long id) {
+        boolean deleted = songService.deleteSongById(id);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", deleted);
+
+        if (deleted) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(404).body(response);
+        }
     }
 }

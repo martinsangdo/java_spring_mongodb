@@ -56,4 +56,12 @@ public class SongService {
 
         return updatedCount;
     }
+
+    public boolean deleteSongById(Long id) {
+        if (songRepository.existsById(id)) {
+            songRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

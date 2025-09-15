@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 import com.t3h.java.module3.model.Song;
 
 @Repository
-public interface SongRepository extends MongoRepository<Song, String> {
+public interface SongRepository extends MongoRepository<Song, Long> {
     List<Song> findTop5ByOrderByYearDesc();
     List<Song> findByAuthorId(Long authorId);
 
     @Query("SELECT s.author_id, COUNT(s) " +
            "FROM Songs s GROUP BY s.author_id ORDER BY COUNT(s) DESC")
     List<Object[]> countSongsByAuthor();
+    boolean existsById(Long songId);
 }
