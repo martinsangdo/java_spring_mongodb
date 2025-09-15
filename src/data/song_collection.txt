@@ -1,0 +1,31 @@
+db.songs.insertMany([
+  { _id: 101, title: "Gravity", year: 2006, duration: 240, author_id: 1 },
+  { _id: 102, title: "Slow Dancing in a Burning Room", year: 2006, duration: 255, author_id: 1 },
+  
+  { _id: 103, title: "Hello", year: 2015, duration: 295, author_id: 2 },
+  { _id: 104, title: "Rolling in the Deep", year: 2010, duration: 228, author_id: 2 },
+  
+  { _id: 105, title: "Time (Inception OST)", year: 2010, duration: 280, author_id: 3 },
+  { _id: 106, title: "Interstellar Main Theme", year: 2014, duration: 600, author_id: 3 },
+  
+  { _id: 107, title: "Love Story", year: 2008, duration: 235, author_id: 4 },
+  { _id: 108, title: "Blank Space", year: 2014, duration: 231, author_id: 4 },
+  
+  { _id: 109, title: "Shape of You", year: 2017, duration: 263, author_id: 4 },
+  { _id: 110, title: "Perfect", year: 2017, duration: 265, author_id: 4 },
+  
+  { _id: 111, title: "Cello Suite No.1", year: 1998, duration: 900, author_id: 6 },
+  { _id: 112, title: "Silk Road", year: 2002, duration: 420, author_id: 6 },
+  
+  { _id: 113, title: "Bad Guy", year: 2019, duration: 194, author_id: 3 },
+  { _id: 114, title: "Ocean Eyes", year: 2016, duration: 200, author_id: 1 },
+  
+  { _id: 115, title: "One More Time", year: 2000, duration: 320, author_id: 8 },
+  { _id: 116, title: "Harder, Better, Faster, Stronger", year: 2001, duration: 224, author_id: 8 },
+  
+  { _id: 117, title: "Hips Don’t Lie", year: 2006, duration: 218, author_id: 2 },
+  { _id: 118, title: "Waka Waka", year: 2010, duration: 210, author_id: 9 },
+  
+  { _id: 119, title: "Nuvole Bianche", year: 2004, duration: 360, author_id: 10 },
+  { _id: 120, title: "Una Mattina", year: 2004, duration: 330, author_id: 10 }
+]);

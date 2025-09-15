@@ -1,0 +1,48 @@
+db.inventory.insertMany([
+    {
+      _id: 1,
+      item: "Laptop",
+      category: "Electronics",
+      quantity: 15,
+      price: 1200.00,
+      supplier: { name: "TechWorld", country: "USA" },
+      last_updated: ISODate("2025-08-01T10:00:00Z")
+    },
+    {
+      _id: 2,
+      item: "Headphones",
+      category: "Electronics",
+      quantity: 50,
+      price: 80.00,
+      supplier: { name: "SoundMax", country: "China" },
+      last_updated: ISODate("2025-08-02T11:30:00Z")
+    },
+    {
+      _id: 3,
+      item: "Office Chair",
+      category: "Furniture",
+      quantity: 25,
+      price: 150.00,
+      supplier: { name: "FurniCo", country: "Germany" },
+      last_updated: ISODate("2025-08-03T09:45:00Z")
+    },
+    {
+      _id: 4,
+      item: "Notebook",
+      category: "Stationery",
+      quantity: 200,
+      price: 2.50,
+      supplier: { name: "PaperWorks", country: "India" },
+      last_updated: ISODate("2025-08-05T14:20:00Z")
+    },
+    {
+      _id: 5,
+      item: "Water Bottle",
+      category: "Sports",
+      quantity: 80,
+      price: 12.00,
+      supplier: { name: "ActiveLife", country: "Vietnam" },
+      last_updated: ISODate("2025-08-06T16:10:00Z")
+    }
+  ]);
+  

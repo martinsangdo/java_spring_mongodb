@@ -1,0 +1,15 @@
+db.singer_song.insertMany([
+  { singer_id: 1, song_id: 101 },
+  { singer_id: 1, song_id: 103 },
+  
+  { singer_id: 2, song_id: 102 },
+  { singer_id: 2, song_id: 103 },
+  
+  { singer_id: 3, song_id: 104 },
+  { singer_id: 3, song_id: 105 },
+  
+  { singer_id: 4, song_id: 106 },
+  { singer_id: 4, song_id: 107 },
+  
+  { singer_id: 2, song_id: 101 }
+]);

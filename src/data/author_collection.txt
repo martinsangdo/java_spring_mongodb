@@ -1,0 +1,12 @@
+db.authors.insertMany([
+  { _id: 1, name: "John Mayer", country: "USA", birth_year: 1977, genre: "Blues Rock" },
+  { _id: 2, name: "Adele", country: "UK", birth_year: 1988, genre: "Pop" },
+  { _id: 3, name: "Hans Zimmer", country: "Germany", birth_year: 1957, genre: "Film Score" },
+  { _id: 4, name: "Taylor Swift", country: "USA", birth_year: 1989, genre: "Pop" },
+  { _id: 5, name: "Ed Sheeran", country: "UK", birth_year: 1991, genre: "Pop" },
+  { _id: 6, name: "Yo-Yo Ma", country: "France/USA", birth_year: 1955, genre: "Classical" },
+  { _id: 7, name: "Billie Eilish", country: "USA", birth_year: 2001, genre: "Alternative Pop" },
+  { _id: 8, name: "Daft Punk", country: "France", birth_year: 1993, genre: "Electronic" },
+  { _id: 9, name: "Shakira", country: "Colombia", birth_year: 1977, genre: "Latin Pop" },
+  { _id: 10, name: "Ludovico Einaudi", country: "Italy", birth_year: 1955, genre: "Classical" }
+]);
