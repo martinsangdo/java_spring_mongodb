@@ -18,7 +18,9 @@ public class Song {
     
     private String title;
     private Integer year;
-    private Integer duration;
+    private Long duration;
+    @Field("formatted_duration")
+    private String formattedDuration;
     @Field("author_id")
     private Long authorId;
 }

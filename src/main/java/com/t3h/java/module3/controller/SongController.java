@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.t3h.java.module3.model.Song;
@@ -35,5 +36,10 @@ public class SongController {
     @GetMapping("/api/song/list_by_year")
     public ResponseEntity<Map<Long, Long>> countSongsByAuthor() {
         return new ResponseEntity<Map<Long, Long>>(songService.getSongCountByAuthor(), HttpStatus.OK);
+    }
+
+    @PutMapping("/api/song/update_duration")
+    public ResponseEntity<Long> updateDurationsToFormatted() {
+        return new ResponseEntity<Long>(songService.updateDurationsToFormatted(), HttpStatus.OK);
     }
 }

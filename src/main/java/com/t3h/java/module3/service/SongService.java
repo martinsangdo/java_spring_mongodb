@@ -29,4 +29,31 @@ public class SongService {
         return songs.stream()
                 .collect(Collectors.groupingBy(Song::getAuthorId, Collectors.counting()));
     }
+
+    public long updateDurationsToFormatted() {
+        List<Song> songs = songRepository.findAll();
+        long updatedCount = 0;
+
+        for (Song song : songs) {
+            if (song.getDuration() != null) {
+                long totalSeconds = song.getDuration();
+                long minutes = totalSeconds / 60;
+                long seconds = totalSeconds % 60;
+
+                String formatted = String.format("%d:%02d", minutes, seconds);
+
+                // update new field
+                song.setFormattedDuration(formatted);
+                // song.setDuration(null); // optional
+
+                updatedCount++;
+            }
+        }
+
+        if (updatedCount > 0) {
+            songRepository.saveAll(songs);
+        }
+
+        return updatedCount;
+    }
 }
