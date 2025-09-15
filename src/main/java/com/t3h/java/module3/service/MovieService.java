@@ -178,8 +178,8 @@ public class MovieService {
     
         // Count movies grouped by language
         Map<String, Long> langCount = movies.stream()
-                .filter(m -> m.getOriginal_Language() != null && !m.getOriginal_Language().isEmpty())
-                .collect(Collectors.groupingBy(Movie::getOriginal_Language, Collectors.counting()));
+                .filter(m -> m.getOriginalLanguage() != null && !m.getOriginalLanguage().isEmpty())
+                .collect(Collectors.groupingBy(Movie::getOriginalLanguage, Collectors.counting()));
     
         // Sort by count descending
         List<Map.Entry<String, Long>> sorted = new ArrayList<>(langCount.entrySet());
@@ -208,11 +208,11 @@ public class MovieService {
     
         return movies.stream()
                 .filter(m -> m.getTitle() != null && !m.getTitle().trim().isEmpty()) // exclude empty titles
-                .filter(m -> m.getVote_Average() != null && m.getVote_Count() != null) // avoid nulls
+                .filter(m -> m.getVoteAverage() != null && m.getVoteCount() != null) // avoid nulls
                 .sorted((a, b) -> {
-                    int cmp = Double.compare(b.getVote_Average(), a.getVote_Average());
+                    int cmp = Double.compare(b.getVoteAverage(), a.getVoteAverage());
                     if (cmp == 0) {
-                        return Integer.compare(b.getVote_Count(), a.getVote_Count());
+                        return Integer.compare(b.getVoteCount(), a.getVoteCount());
                     }
                     return cmp;
                 })
@@ -234,22 +234,22 @@ public class MovieService {
     
         return movies.stream()
                 .filter(m -> m.getTitle() != null && !m.getTitle().trim().isEmpty()) // exclude empty title
-                .filter(m -> m.getRelease_Date() != null && !m.getRelease_Date().isEmpty()) // valid date
-                .filter(m -> m.getVote_Average() != null && m.getVote_Count() != null) // avoid nulls
+                .filter(m -> m.getReleaseDate() != null && !m.getReleaseDate().isEmpty()) // valid date
+                .filter(m -> m.getVoteAverage() != null && m.getVoteCount() != null) // avoid nulls
                 .sorted((a, b) -> {
                     // Parse release dates
-                    LocalDate dateA = LocalDate.parse(a.getRelease_Date(), formatter);
-                    LocalDate dateB = LocalDate.parse(b.getRelease_Date(), formatter);
+                    LocalDate dateA = LocalDate.parse(a.getReleaseDate(), formatter);
+                    LocalDate dateB = LocalDate.parse(b.getReleaseDate(), formatter);
     
                     // First: latest release date
                     int cmp = dateB.compareTo(dateA);
                     if (cmp == 0) {
                         // Second: vote average
-                        cmp = Double.compare(b.getVote_Average(), a.getVote_Average());
+                        cmp = Double.compare(b.getVoteAverage(), a.getVoteAverage());
                     }
                     if (cmp == 0) {
                         // Third: vote count
-                        cmp = Integer.compare(b.getVote_Count(), a.getVote_Count());
+                        cmp = Integer.compare(b.getVoteCount(), a.getVoteCount());
                     }
                     return cmp;
                 })
@@ -268,11 +268,11 @@ public class MovieService {
     
         return movies.stream()
                 .filter(m -> m.getTitle() != null && !m.getTitle().trim().isEmpty()) // skip empty titles
-                .filter(m -> m.getPopularity() != null && m.getVote_Count() != null) // skip nulls
+                .filter(m -> m.getPopularity() != null && m.getVoteCount() != null) // skip nulls
                 .sorted((a, b) -> {
                     int cmp = Double.compare(b.getPopularity(), a.getPopularity()); // sort by popularity
                     if (cmp == 0) {
-                        cmp = Integer.compare(b.getVote_Count(), a.getVote_Count()); // tie-breaker
+                        cmp = Integer.compare(b.getVoteCount(), a.getVoteCount()); // tie-breaker
                     }
                     return cmp;
                 })

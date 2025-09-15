@@ -125,9 +125,9 @@
                             <tbody>
                                 <tr th:each="movie : ${data.top5ByVoteAverage}">
                                     <td th:text="${movie.title}"></td>
-                                    <td th:text="${movie.Original_Language}"></td>
-                                    <td th:text="${movie.Vote_Average}"></td>
-                                    <td th:text="${movie.Vote_Count}"></td>
+                                    <td th:text="${movie.originalLanguage}"></td>
+                                    <td th:text="${movie.voteAverage}"></td>
+                                    <td th:text="${movie.voteCount}"></td>
                                     <td th:text="${movie.genre}"></td>
                                 </tr>
                             </tbody>
@@ -147,12 +147,12 @@
                                 <h6 class="mb-0">Recent movies</h6>
                             </div>
                             <div class="d-flex align-items-center border-bottom py-3" th:each="movie : ${data.top5ByReleaseDate}">
-                                <img class="rounded-circle flex-shrink-0" th:src="${movie.Poster_Url}" alt="" style="width: 40px; height: 40px;">
+                                <img class="rounded-circle flex-shrink-0" th:src="${movie.posterUrl}" alt="" style="width: 40px; height: 40px;">
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h6 class="mb-0" th:text="${movie.title}"></h6>
                                     </div>
-                                    <span th:text="${movie.Release_Date}"></span>
+                                    <span th:text="${movie.releaseDate}"></span>
                                 </div>
                             </div>
                         </div>
