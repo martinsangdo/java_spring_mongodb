@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.t3h.java.module3.model.Author;
 import com.t3h.java.module3.model.Song;
+import com.t3h.java.module3.model.SongWithAuthor;
 import com.t3h.java.module3.repository.AuthorRepository;
 import com.t3h.java.module3.repository.SongRepository;
 
@@ -83,6 +84,23 @@ public class SongService {
                 .stream()
                 .map(Author::getCountry)
                 .distinct()
+                .toList();
+    }
+
+    public List<SongWithAuthor> getAllSongsWithAuthors() {
+        List<Song> songs = songRepository.findAll();
+        Map<Long, String> authorMap = authorRepository.findAll()
+                .stream()
+                .collect(Collectors.toMap(Author::get_id, Author::getName));
+
+        return songs.stream()
+                .map(s -> new SongWithAuthor(
+                        s.get_id(),
+                        s.getTitle(),
+                        s.getYear(),
+                        authorMap.getOrDefault(s.getAuthorId(), "Unknown"),
+                        s.getFormattedDuration()
+                ))
                 .toList();
     }
 }

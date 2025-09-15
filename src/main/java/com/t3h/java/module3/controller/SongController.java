@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.t3h.java.module3.model.Author;
 import com.t3h.java.module3.model.Song;
+import com.t3h.java.module3.model.SongWithAuthor;
 import com.t3h.java.module3.service.SongService;
 
 @Controller
@@ -100,5 +101,13 @@ public class SongController {
     public ResponseEntity<List<Author>> getAuthorsByCountry(@RequestParam String country) {
         List<Author> results = songService.getAuthorsByCountry(country);
         return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+    //5.1
+    @GetMapping("/songs/with_authors")
+    public String songsPage(Model model) {
+        List<SongWithAuthor> songs = songService.getAllSongsWithAuthors();
+        model.addAttribute("songs", songs);
+        return "songs_with_author"; // Thymeleaf template songs.html
     }
 }
