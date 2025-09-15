@@ -121,13 +121,13 @@
                             <!-- begin of 1 item -->
                             <div class="col-lg-4 col-md-6 col-sm-6" th:each="r : ${list}">
                                 <div class="product__item">
-                                    <div class="product__item__pic set-bg" th:attr="data-setbg=${r.Poster_Url}">
-                                        <div class="ep" th:text="${r.Vote_Average}"></div>
-                                        <div class="comment"><i class="fa fa-comments"></i><span th:text="${r.Popularity}"></span></div>
-                                        <div class="view"><i class="fa fa-eye"></i><span th:text="${r.Vote_Count}"></span></div>
+                                    <div class="product__item__pic set-bg" th:attr="data-setbg=${r.posterUrl}">
+                                        <div class="ep" th:text="${r.voteAverage}"></div>
+                                        <div class="comment"><i class="fa fa-comments"></i><span th:text="${r.popularity}"></span></div>
+                                        <div class="view"><i class="fa fa-eye"></i><span th:text="${r.voteCount}"></span></div>
                                     </div>
                                     <div class="product__item__text">
-                                        <h5><a href="#" th:text="${r.Title}"></a></h5>
+                                        <h5><a href="#" th:text="${r.title}"></a></h5>
                                     </div>
                                 </div>
                             </div>

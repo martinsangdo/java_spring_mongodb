@@ -79,7 +79,7 @@ public class MovieService {
         // Group by originalLanguage and count
         return movies.stream()
                      .collect(Collectors.groupingBy(
-                         Movie::getOriginal_Language,
+                         Movie::getOriginalLanguage,
                          Collectors.counting()
                      ));
     }
@@ -103,9 +103,9 @@ public class MovieService {
 
         // Count movies grouped by year-month
         Map<String, Long> countByMonth = movies.stream()
-                .filter(m -> m.getRelease_Date() != null)
+                .filter(m -> m.getReleaseDate() != null)
                 .collect(Collectors.groupingBy(m -> {
-                    LocalDate date = LocalDate.parse(m.getRelease_Date(), formatter);
+                    LocalDate date = LocalDate.parse(m.getReleaseDate(), formatter);
                     return date.getYear() + "-" + String.format("%02d", date.getMonthValue());
                 }, Collectors.counting()));
 

@@ -82,7 +82,7 @@ public class MovieController {
         if ((endPage - startPage) < (maxPagesToShow - 1)) {
             startPage = Math.max(0, endPage - (maxPagesToShow - 1));
         }
-        System.out.println(moviePage.getContent());
+        // System.out.println(moviePage.getContent());
         model.addAttribute("list", moviePage.getContent());
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);

@@ -11,13 +11,13 @@ class MovieTest {
     @Test
     void isHighlyRated_returnsTrue_whenRatingAboveThreshold() {
         Movie movie = new Movie();
-        movie.setVote_Average(9.0);
+        movie.setVoteAverage(9.0);
         assertTrue(movie.isHighlyRated());
     }
     @Test
     void isHighlyRated_returnsFalse_whenRatingBelowThreshold() {
         Movie movie = new Movie();
-        movie.setVote_Average(9.0);
+        movie.setVoteAverage(9.0);
         assertFalse(movie.isHighlyRated());
     }
 }
