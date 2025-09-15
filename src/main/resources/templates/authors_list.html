@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Authors List</title>
+    <style>
+        .single_line {border: 1px solid #000;}
+      </style>
+</head>
+<body>
+<h2>Authors</h2>
+<form th:action="@{/authors/update}" method="post">
+    <table class="single_line">
+        <tr>
+            <th>Inactive?</th>
+            <th>Name</th>
+            <th>Country</th>
+        </tr>
+        <tr th:each="author : ${authors}">
+            <!-- Checkbox checked if author is inactive -->
+            <td>
+                <input type="checkbox" name="authorIds"
+                       th:value="${author._id}"
+                       th:checked="${!author.isActive}" />
+            </td>
+            <td th:text="${author.name}"></td>
+            <td th:text="${author.country}"></td>
+        </tr>
+    </table>
+    <button type="submit">Update</button>
+</form>
+
+</body>
+</html>

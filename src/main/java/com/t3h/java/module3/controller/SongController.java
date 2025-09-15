@@ -1,5 +1,6 @@
 package com.t3h.java.module3.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,5 +150,18 @@ public class SongController {
         model.addAttribute("minYear", minYear);
         model.addAttribute("maxYear", minYear);
         return "songs_filter";
+    }
+    //6.2
+    @GetMapping("/authors/list")
+    public String showAuthors(Model model) {
+        List<Author> authors = songService.getAllAuthors();
+        model.addAttribute("authors", authors);
+        return "authors_list";
+    }
+
+    @PostMapping("/authors/update")
+    public String updateAuthors(@RequestParam(required = false) List<Long> authorIds) {
+        songService.updateAuthorsActiveStatus(authorIds);
+        return "redirect:/authors/list";
     }
 }

@@ -21,4 +21,8 @@ public class Author {
     @Field("birth_year")
     private Integer birthYear;
     private String genre;
+
+    @Field("is_active")
+    private Boolean isActive = false; // new field
+
 }

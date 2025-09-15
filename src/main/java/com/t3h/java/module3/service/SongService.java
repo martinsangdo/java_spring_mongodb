@@ -8,6 +8,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.BulkOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.t3h.java.module3.model.Author;
@@ -22,7 +27,13 @@ public class SongService {
     SongRepository songRepository;
     @Autowired
     AuthorRepository authorRepository;
-    
+
+    private final MongoTemplate mongoTemplate;
+
+    public SongService(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate; // injected automatically
+    }
+
     public Song getSongDetail(Long id){
         Song song = songRepository.findBy_id(id);
         return song;
@@ -131,4 +142,26 @@ public class SongService {
                 ))
                 .toList();
     }
+
+    public void updateAuthorsActiveStatus(List<Long> inactiveAuthorIds) {
+        List<Author> allAuthors = authorRepository.findAll();
+    
+        for (Author author : allAuthors) {
+            boolean shouldBeInactive = inactiveAuthorIds != null && inactiveAuthorIds.contains(author.get_id());
+            
+            // Update author active flag
+            author.setIsActive(!shouldBeInactive);
+            authorRepository.save(author);
+    
+            // If inactive → bulk update songs (duration = 0)
+            if (shouldBeInactive) {
+                Query query = new Query(Criteria.where("authorId").is(author.get_id()));
+                Update update = new Update().set("duration", 0L);
+                mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, Song.class)
+                             .updateMulti(query, update)
+                             .execute();
+            }
+        }
+    }
+    
 }
