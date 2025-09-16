@@ -206,4 +206,35 @@ public class SongService {
         double discountedPrice = originalPrice * (1 - discountRate / 100);
         return discountedPrice * quantity;
     }
+
+    /**
+     * Registers a user
+     * 
+     * @param username must be non-null, 3-20 chars
+     * @param email must contain '@'
+     * @param age must be >= 13
+     * @return success message if valid
+     */
+    /* CSV file
+        username,email,age,expected_result
+        john,john@example.com,20,User john registered successfully!
+        a,b@c.com,15,Username must be 3-20 characters long
+        alex,alexexample.com,25,Invalid email address
+        mike,mike@example.com,10,User must be at least 13 years old
+        null,null,0,Username must be 3-20 characters long
+        longusername1234567890,jane@example.com,30,Username must be 3-20 characters long
+        sara,sara@domain.com,13,User sara registered successfully!
+     */
+    public static String registerUser(String username, String email, int age) {
+        if (username == null || username.isBlank() || username.length() < 3 || username.length() > 20) {
+            throw new IllegalArgumentException("Username must be 3-20 characters long");
+        }
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("Invalid email address");
+        }
+        if (age < 13) {
+            throw new IllegalArgumentException("User must be at least 13 years old");
+        }
+        return "User " + username + " registered successfully!";
+    }
 }
