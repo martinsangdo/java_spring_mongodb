@@ -172,4 +172,9 @@ public class SongController {
         model.addAttribute("keyword", keyword);
         return "authors_search";
     }
+    //7.1
+    @GetMapping("/songs/list")
+    public String showSongsInTemplate(Model model) {
+        return "one_music/albums-store";
+    }
 }
