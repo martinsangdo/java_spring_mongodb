@@ -190,4 +190,20 @@ public class SongService {
         }
         return authorRepository.searchByNameOrCountry(keyword);
     }
+    //8.1 unit test
+    public static double calculateDiscount(double originalPrice, double discountRate, int quantity) {
+        // Check for invalid parameters
+        if (originalPrice < 0) {
+            throw new IllegalArgumentException("Original price cannot be negative");
+        }
+        if (discountRate < 0 || discountRate > 100) {
+            throw new IllegalArgumentException("Discount rate must be between 0 and 100");
+        }
+        if (quantity < 1) {
+            throw new IllegalArgumentException("Quantity must be at least 1");
+        }
+
+        double discountedPrice = originalPrice * (1 - discountRate / 100);
+        return discountedPrice * quantity;
+    }
 }
