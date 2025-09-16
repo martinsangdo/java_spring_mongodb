@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -117,6 +118,14 @@ public class SongService {
             .collect(Collectors.toCollection(TreeSet::new)); // TreeSet for sorted order
 
             return firstLetters;
+    }
+
+    public List<Song> get4LatestSongs(){
+        List<Song> latestSongs = songRepository.findAll(Sort.by(Sort.Direction.DESC, "year"));
+        if (latestSongs.size() > 4) {
+            latestSongs = latestSongs.subList(0, 4);
+        }
+        return latestSongs;
     }
     //authors
     public List<Author> getAllAuthors() {

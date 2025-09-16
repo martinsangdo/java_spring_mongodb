@@ -180,6 +180,9 @@ public class SongController {
         model.addAttribute("firstLetters", firstLetters);
         List<SongWithAuthor> songs = songService.getAllSongsWithAuthors();
         model.addAttribute("songs", songs);
+
+        List<Song> latestSongs = songService.get4LatestSongs();
+        model.addAttribute("latestSongs", latestSongs);
         return "one_music/albums-store";
     }
 }

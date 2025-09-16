@@ -295,67 +295,22 @@
                 <!-- Single Song Area -->
                 <div class="col-12">
                     <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="/one_music/img/bg-img/s1.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>01. Main Hit Song</p>
+                        <div th:each="song, iterStat : ${latestSongs}" class="song-item d-flex w-100 mb-3">
+                
+                            <div class="song-thumbnail">
+                                <img src="/one_music/img/bg-img/s1.jpg" alt="" />
                             </div>
-                            <audio preload="auto" controls>
-                                <source src="/one_music/audio/dummy-audio.mp3">
-                            </audio>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="/one_music/img/bg-img/s2.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>01. Main Hit Song</p>
+                
+                            <div class="song-play-area flex-grow-1 ml-3">
+                                <div class="song-name">
+                                    <p th:text="${iterStat.index + 1} + '. ' + ${song.title}"></p>
+                                </div>
+                                <audio preload="auto" controls>
+                                    <source src="/one_music/audio/dummy-audio.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
                             </div>
-                            <audio preload="auto" controls>
-                                <source src="/one_music/audio/dummy-audio.mp3">
-                            </audio>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="/one_music/img/bg-img/s3.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>01. Main Hit Song</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/dummy-audio.mp3">
-                            </audio>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="/one_music/img/bg-img/s4.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>01. Main Hit Song</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/dummy-audio.mp3">
-                            </audio>
+                
                         </div>
                     </div>
                 </div>
