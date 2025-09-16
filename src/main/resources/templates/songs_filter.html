@@ -6,7 +6,7 @@
     <style>
         table {
             border-collapse: collapse;
-            width: 90%;
+            width: 50%;
             margin-top: 16px;
         }
         table, th, td {
@@ -15,6 +15,7 @@
         th, td {
             padding: 8px 10px;
         }
+        input {width: 70px;}
     </style>
 </head>
 <body>
@@ -23,7 +24,7 @@
 
 <form method="get" th:action="@{/songs/filter}">
     <label>Min duration (sec):
-        <input type="number" name="minDuration" th:value="${minDuration}" />
+        <input type="number" name="minDuration" th:value="${minDuration}"/>
     </label>
     <label>Max duration (sec):
         <input type="number" name="maxDuration" th:value="${maxDuration}" />

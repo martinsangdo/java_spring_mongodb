@@ -148,7 +148,7 @@ public class SongController {
         model.addAttribute("minDuration", minDuration);
         model.addAttribute("maxDuration", maxDuration);
         model.addAttribute("minYear", minYear);
-        model.addAttribute("maxYear", minYear);
+        model.addAttribute("maxYear", maxYear);
         return "songs_filter";
     }
     //6.2
