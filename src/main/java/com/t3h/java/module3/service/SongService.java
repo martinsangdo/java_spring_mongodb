@@ -2,6 +2,8 @@ package com.t3h.java.module3.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +107,16 @@ public class SongService {
         if (maxYear == null) maxYear = Integer.MAX_VALUE;
 
         return songRepository.findByDurationRangeAndYear(minDuration, maxDuration, minYear, maxYear);
+    }
+    public Set<String> getSongChars(){
+        List<Song> songs = songRepository.findAll();
+
+        // Extract unique first letters
+        Set<String> firstLetters = songs.stream()
+            .map(s -> s.getTitle().substring(0, 1).toUpperCase())
+            .collect(Collectors.toCollection(TreeSet::new)); // TreeSet for sorted order
+
+            return firstLetters;
     }
     //authors
     public List<Author> getAllAuthors() {
