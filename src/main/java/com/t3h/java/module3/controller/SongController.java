@@ -178,7 +178,8 @@ public class SongController {
     public String showSongsInTemplate(Model model) {
         Set<String> firstLetters = songService.getSongChars();
         model.addAttribute("firstLetters", firstLetters);
-
+        List<SongWithAuthor> songs = songService.getAllSongsWithAuthors();
+        model.addAttribute("songs", songs);
         return "one_music/albums-store";
     }
 }
