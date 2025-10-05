@@ -1,7 +1,5 @@
 package com.t3h.java.module3.model;
 
-import java.util.List;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
